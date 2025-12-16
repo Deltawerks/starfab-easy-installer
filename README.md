@@ -24,8 +24,9 @@ The fix exists in the `scdatatools` development branch, but installing it requir
 
 1. Download this repository (click the green "Code" button → "Download ZIP").
 2. Extract the ZIP to a folder of your choice (e.g., `C:\StarFab`).
-3. **Right-click** `Run-StarFab.ps1` and select **"Run with PowerShell"**.
-4. Follow the on-screen prompts.
+3. **Double-click** `Run-StarFab.bat` to start the installer.
+
+> **Note**: If you prefer PowerShell, you can right-click `Run-StarFab.ps1` and select "Run with PowerShell" instead.
 
 The script will:
 - Create a local `.venv` folder (keeps your system clean).
