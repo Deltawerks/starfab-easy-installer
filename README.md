@@ -20,6 +20,14 @@ The fix exists in the `scdatatools` development branch, but installing it requir
 - **Git for Windows**: [Download Here](https://git-scm.com/download/win)
 - **Python 3.10**: Will be installed automatically via `winget` if missing.
 
+## What This Fixes
+
+1. **"Multiple Datacores" Crash** - StarFab crashed when loading recent Star Citizen patches. Fixed by using the development branch of `scdatatools`.
+
+2. **Blender Export (Empty Models)** - Exports resulted in only bounding boxes/lights in Blender. Fixed by auto-downloading the required converter tools:
+   - `cgf-converter.exe` from [Markemp/Cryengine-Converter](https://github.com/Markemp/Cryengine-Converter)
+   - `texconv.exe` from [Microsoft/DirectXTex](https://github.com/microsoft/DirectXTex)
+
 ## Installation
 
 1. Download this repository (click the green "Code" button → "Download ZIP").

@@ -141,6 +141,43 @@ if (-not $?) {
     exit 1
 }
 
+# 5. Download Converter Tools (cgf-converter and texconv)
+$ContribDir = Join-Path $VenvDir "Lib/site-packages/starfab/contrib"
+if (-not (Test-Path $ContribDir)) {
+    New-Item -ItemType Directory -Path $ContribDir -Force | Out-Null
+}
+
+$CgfConverterPath = Join-Path $ContribDir "cgf-converter.exe"
+$TexconvPath = Join-Path $ContribDir "texconv.exe"
+
+# Download cgf-converter.exe if not present
+if (-not (Test-Path $CgfConverterPath)) {
+    Write-Log "Downloading cgf-converter.exe (this may take a minute)..." $Yellow
+    $CgfConverterUrl = "https://github.com/Markemp/Cryengine-Converter/releases/download/v1.7.1/cgf-converter.exe"
+    try {
+        Invoke-WebRequest -Uri $CgfConverterUrl -OutFile $CgfConverterPath -UseBasicParsing
+        Write-Log "cgf-converter.exe downloaded successfully." $Green
+    } catch {
+        Write-Log "Warning: Failed to download cgf-converter.exe. Model conversion may not work." $Yellow
+    }
+} else {
+    Write-Log "cgf-converter.exe already present." $Green
+}
+
+# Download texconv.exe if not present
+if (-not (Test-Path $TexconvPath)) {
+    Write-Log "Downloading texconv.exe..." $Yellow
+    $TexconvUrl = "https://github.com/microsoft/DirectXTex/releases/download/jul2025/texconv.exe"
+    try {
+        Invoke-WebRequest -Uri $TexconvUrl -OutFile $TexconvPath -UseBasicParsing
+        Write-Log "texconv.exe downloaded successfully." $Green
+    } catch {
+        Write-Log "Warning: Failed to download texconv.exe. Texture conversion may not work." $Yellow
+    }
+} else {
+    Write-Log "texconv.exe already present." $Green
+}
+
 Write-Log "Setup complete!" $Green
 
 # 5. Run StarFab

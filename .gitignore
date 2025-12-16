@@ -1,0 +1,15 @@
+# Virtual environment
+.venv/
+
+# Logs
+*.log
+
+# Extracted content
+MISC_Razor/
+
+# StarFab fork (development)
+starfab-fork/
+
+# OS files
+.DS_Store
+Thumbs.db
