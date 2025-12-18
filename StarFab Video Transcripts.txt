@@ -1,0 +1,113 @@
+Part 1 - Intro to StarFab - Part 1 Getting Started
+
+0:00
+Ventorvar: Hello and welcome to this intro to StarFab series. I’m Ventorvar, let's get started.
+0:09
+StarFab is a tool that can be used for exploring and extracting data from Star Citizen. First up, you can find StarFab by going to scmodding.tools, which will bring you to the Star Citizen Modding GitLab group, where you can find all sorts of community projects and modding information for Star Citizen.
+0:26
+Here you can find the StarFab link from the main page. The latest releases will always be available through this button at the top of the project page. Release pages will have a short description of what’s changed, useful information for getting up and running, and the installer download links.
+0:42
+For this series, we’re going to be focusing on Windows, and we'll go ahead and get the installer downloading and check out the dependencies information. Now, for most of the dependencies listed here, [they] are bundled with the installer so you don’t need to worry about those. However, if you want to listen to the game audio in StarFab, you need to have the Vorbis codec installed, so let’s go ahead and grab those as well.
+1:08
+To install StarFab, simply run the downloaded installer and follow the prompts. And you should do this for the Open Codec file we downloaded as well.
+1:35
+Once installed, you can find StarFab in your Start menu. And you’re first greeted by the Open dialog. StarFab will try to find the LIVE and PTU game folders and give you quick load buttons at the top to quickly jump in. You can also see folders you’ve recently opened or choose another location to open at the bottom. We’ll go ahead and load the LIVE game data.
+1:56
+Right now, StarFab is reading the contents of the Data.p4k and processing the DataCore.
+2:07
+Once loaded, you’re greeted with the Data Workspace, which is designed around exploring and extracting the contents of the pack and the DataCore. We’ll dive deeper into what those are in another video, but briefly: The DataCore is a kind of database where you can find records for in-game entities. For example, the Avenger Stalker ship.
+2:28
+On the right side of the Data Workspace, we have the view tabs for whatever you might be inspecting, and these can be different depending on the object you’re looking at.
+2:39
+In the Data Pack, you can explore all the in-game assets and other data not found in the DataCore. Double-clicking on entries will open a tab as long as the data type is supported.
+2:52
+Also in the Data Workspace, we have a Localization tool, which is very helpful for looking up what items are referred to in the pack from the in-game name you’re familiar with. For example, the DustUp Armor is "slaver_medium_armor_01."
+3:14
+Finally, you can browse the default keybindings for in-game actions in the Action Map tab.
+3:22
+The Content Workspace is used for extracting complex entities from the game files. These are things like ships, vehicles, weapons, locations, and armor that are built up of a number of smaller components, including their models and textures.
+3:36
+Also in the Content view, we can browse, play, and extract the in-game audio files.
+3:42
+[Audio Clip: Automated landing initiated]
+3:45
+That wraps us up for the first intro into getting StarFab up and running. If you need help, you can find the link in the About dialog to the StarFab project page, where you can submit an issue ticket. You can also join the SC Modding Community Discord or check out the Wiki, which is continuing to grow with new guides and in-depth information about Star Citizen.
+4:17
+Thanks for checking out StarFab, and we’ll see you in the next video.
+
+Part 2 - Intro to StarFab - Part 2 Data Mining
+
+00:00
+Hello and welcome to this Intro to StarFab series. I'm Ventorvar, and this is an introduction to datamining Star Citizen with StarFab.
+00:11
+Data mining refers to digging through the raw data to find the absolute values for information in the game. For example, we can figure exactly how fast a ship can accelerate based off its set values, or exactly how long a reload time will take, or how much power a shield generator uses. As Star Citizen is in active development, the location and format of how these types of data are stored can change over time. So you might have to do some exploring in future versions. Here we're looking at the current live version, which is 3.16.1, build 7939065.
+00:46
+Now, Star Citizen stores all of its data in what is called the Data Pack. This is a custom ZIP archive the game uses to access all of the assets, configurations, and other things needed to run. Nearly all games use compressed files like this as a balance between download sizes and access speeds, and really isn't designed to keep people out. If you fully extracted the Data Pack, it would be well over double the size on disk as the Pack.
+01:12
+The other key system to become familiar with is the Data Core. In the pack, the Data Core is a single file called Game.dcb. This file is a custom format to efficiently store records about all sorts of things in the game, and it’s where you can find ships, weapons—even the star map is defined.
+01:28
+For example, let's say we want to check out the Crusader Starfighter Ion. Ships are typically in the Entities/Spaceships folder. And as you can see, the naming scheme is fairly easy to decipher, being the ship manufacturer followed by the ship name. Here is the Ion. Double-clicking the entry will open a Data Record view on the right.
+01:47
+Records in the Data Core are incredibly modular and built using lots of references to other records. The Record view turns this into a more digestible format, breaking down the properties and nested components. You'll notice there are a lot of components, and it can take a while to become familiar with what's most interesting.
+02:05
+Let's try to find the firing rate for the main gun on the Ion. Ships have loadouts that are defined in the SEntityComponentDefaultLoadoutParams section. Nearly every piece of a ship is an entity attached to an item port in the loadout—from the different seats, to the missile racks, to the paint. There is a lot here, and we know that the main gun on the Ion is a Size 7, so let's try searching for "S7".
+02:35
+Here's the item port for the main weapon, and we can see its entity class name here. We can now search for that in the Data Core and open the record for the Size 7 Laser Cannon.
+02:54
+We could continue looking through the components here, but sometimes it's easier to see it laid out as text, so we'll try viewing the record as JSON. This is the same information in the record view, but in the editor. You could comb through this to become familiar with all the data involved in a component—and there is a lot—but I already know what I'm looking for, so we'll search for "fire actions."
+03:17
+Nested in the configurations for the fire actions, we can see the "WeaponSequenceDelay" is 110, and that's in RPM, or Rate Per Minute. Meaning the S7 Laser Cannon will fire 110 times per minute.
+03:30
+Let's take it a step further and see how much damage we'll do with each shot. For that, we need to search for the "ammo parameters," which will give us the record ID for the ammo this weapon uses. And this is an important point: data records have a name and a path, but these are not guaranteed to be unique. The only reliably unique reference to a record is the GUID. We can search for the ammo ID in the Data Core, and we found the S7 ammo. We'll go ahead and search for "damage," and we can see it under the "projectile params."
+03:59
+If we wanted to share this information, you can right-click on the section and choose "Copy as JSON," which we can then paste into other applications. You can also right-click on the record and extract the entire record to disk.
+04:23
+For something different, let's say I wanted to look at the materials for the Ion. Back in its record, I can look for the ship's geometry. Here, nested in the GeometryResourceParams, we can see the path to the primary model for the Ion. Most reference paths will not include the "Data" at the beginning of the path name. So if we go over to the Pack, we can navigate to Data > Objects > Spaceships > Crusader > Starfighter.
+05:03
+Model files in Star Citizen are custom formats, so we will dive into it in another video, but you can browse them to some extent just like the Data Core records. Here we can see the material name, which points us to the Crus_Starfighter.mtl in the same folder.
+05:25
+Now, I happen to know that these files are in the CryXMLB format, which is a legacy CryEngine format not too dissimilar to the Data Core. StarFab understands these files and will automatically convert them to be human-readable format and then open in the editor tab. In this case, it converted the file to XML. My editor might look different than yours by default, but you can modify your editor settings in the Settings dialog at the top, as well as the format to convert CryXMLB to.
+05:57
+I want to find the decals that are all over the hull of the ship. So we'll search for ext_decal and find the path to the textures that are used. You'll notice the path ends in .tif, but nearly all textures are actually in a custom DDS format. StarFab makes working with these easy, as we can double-click on any component part of the split DDS texture, and it'll automatically recombine them and convert them to a format that is easier to use. We can save this image by right-clicking on the image viewer.
+07:00
+If we wanted to extract all of these decals, we can right-click on the folder in the Pack list and choose "Extract to...". This extraction dialogue gives you options in how the data is extracted. By default, StarFab will automatically convert textures and models as they're being extracted from the Pack, and you can choose which format they're converted to. If we had chosen "Save to..." instead of "Extract to...", the same process would have happened, but the files would have been stored directly in the chosen folder without recreating the directory structure.
+07:29
+So there's a brief introduction to what it's like exploring the data inside of Star Citizen, both in the Data Core and in the Pack. The game is constantly changing, to include how and where the information is stored, and the SC Modding Wiki and Discord are good places to go if you're looking how to find a specific piece of information. Good luck, and see you in the verse.
+
+Part 3 - Intro to StarFab - Part 3 Asset Extraction
+
+Here is a transcription of the video provided.
+00:00 - 00:10
+Narrator: Hello and welcome to this Intro to StarFab series. I'm Ventorvar, and this is an introduction to asset extraction from Star Citizen with StarFab.
+00:10 - 00:29
+Narrator: When referring to assets, we're typically talking about files that make up the things you can see and hear inside the game. Not only does Star Citizen have incredibly detailed assets, but they're broken up into many, many pieces that can be reused or streamed in and out of the game on the fly to be able to support such a large universe.
+00:29 - 00:41
+Narrator: When looking at a record in the database, you can find the geometry associated with that record, but that is typically going to be the bare minimum required to load. Let's say if the object is very, very far away from you.
+00:41 - 01:05
+Narrator: Let's take an example of the Drake Caterpillar. If we look at its record in the data core, we can see its primary geometry is this Drake Caterpillar model. If we extract and convert that model, we would end up with this. We've got the exterior hull, but we're missing the doors and all of the interior. With some of the larger ships, you’d be even missing parts of the exterior as well.
+01:05 - 01:19
+Narrator: Traditionally, you would have to find and extract every model associated with every component and sub-component of an entity, and then manually import them and move them into their correct location, which would take hours and hours of work.
+01:19 - 01:50
+Narrator: To help with this problem, StarFab has introduced the concept of blueprints. In the Content View, you have a few different views that let you browse different complex entity types defined in Star Citizen. Let's go ahead and select the Anvil Terrapin to extract. On the right side of the view, we have different options for conversions and what formats to convert to. In most cases, you'll want to keep the default options checked here, but I'm going to go ahead and turn on verbose logging so we can see a bit more of what's happening in the background. And we'll go ahead and click Export.
+01:50 - 02:11
+Narrator: What's happening now is StarFab started reading the Terrapin record and it's iteratively processing every component defined in it. For each component or model, it marks it for extraction, but it also catalogs the hierarchy and position of each of those components.
+02:11 - 02:27
+Narrator: When the export is finished, you'll have a data directory which contains all of the data that was exported from the pack and an .scpb or Star Citizen Project Blueprint file. This blueprint file can be used with external tools to import and reassemble the exported entities.
+02:27 - 03:02
+Narrator: StarFab comes with Blender integration, so let's take a look at how to set that up. First, we'll open the settings and choose which Blender executable to integrate with. If your Blender is installed in the default location, you can leave this with "Auto" or choose a specific version you want loaded. Otherwise, you can add additional locations to the search for Blender by clicking the cog and then the plus button. The Blender dropdown in the settings dialog will only show versions of Blender that are compatible with the StarFab plugins. At the time of this video, that's 2.93 LTS and 3.0.
+03:02 - 03:14
+Narrator: Once that's set, we can click the Blender tab at the top and install the Blender add-on. As the dialog notes, we have to enable the plugin inside of Blender before we can use them.
+03:14 - 03:34
+Narrator: For convenience, you can open Blender directly from StarFab, which will also automatically connect StarFab’s Blender link, which we'll talk about in another video. Once in Blender, go to Edit > Preferences > Add-ons and search for "SC Modding." Check the box for both add-ons to enable the required plugins.
+03:34 - 03:57
+Narrator: Once enabled, you should see the "SC Modding" menu option at the top, which we can use to import the Terrapin blueprint we just exported. When you open Blender from StarFab, it will also make sure the console window is open. Blender will seem to be frozen when importing entities, but you can track the process of the import in the console window.
+03:57 - 04:08
+Narrator: Here we can see the imported Terrapin and that it has everything in place, even on the inside.
+04:08 - 04:20
+Narrator: Beyond ships, you can extract armor sets, weapons, object containers, and prefabs. The Entities section lists every entity in the data core that has any geometry defined at all.
+04:20 - 04:33
+Narrator: Prefabs are a legacy format that define how multiple components fit together. It seems that prefabs are being used less in favor for the new Object Container format, and there are prefabs defined that are quite old and not used in the game anymore.
+04:33 - 04:51
+Narrator: Object Containers are the new format that defines streaming object containers that create nested hierarchy of components and models from ships to whole planets. You can extract object containers themselves, but they may be missing contextual information if they're not extracted as part of their parent, so be aware of that.
+04:51 - 05:10
+Narrator: This has been a brief introduction to exporting assets and entities from Star Citizen. Working with the models is quite complex and requires a good understanding of the tools that you're using. We'll be going deeper into working with the entities in Blender in another video. Happy exporting, and see you in the verse.

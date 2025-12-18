@@ -1,0 +1,47 @@
+Armor
+	
+	Heavy
+		Helmet
+		Core
+		Arms
+		Legs
+		Backpack
+	Light
+		Helmet
+		Core
+		Arms
+		Legs
+		Backpack
+
+	Medium
+		Helmet
+		Core
+		Arms
+		Legs
+		Backpack
+
+	Bespoke
+		Helmet
+		Core
+		Arms
+		Legs
+		Backpack
+
+	
+
+Devices
+
+FPS Weapons
+	Primary
+	Secondary
+	Special
+	Melee
+	Magazines
+	Throwable
+	Weapon Attachments
+
+Ships
+	By Maker
+Ground Vehicles
+	By Maker
+

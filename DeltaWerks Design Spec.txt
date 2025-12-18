@@ -1,0 +1,64 @@
+DeltaWerks Design System (Web Spec)
+Aesthetic: "Spy-Fi / Industrial Future"
+Core Visuals: Deep blacks, dark slate blues, semi-transparent glass panels, and high-contrast neon accents.
+1. Color Palette
+Core Backgrounds
+Main Background: #000000 (Deep Void)
+Card/Modal Background: #0F172A (Panel Dark) - Often used with opacity
+Input/Secondary Background: #1E293B (Panel Mid)
+Overlay/Dimming: rgba(0,0,0,0.5)
+Typography Colors
+Primary Text: #E5E7EB (Off-white, high readability)
+Muted/Subtitle Text: #64748B (Slate Grey)
+Accent: Cyan (Energy & Active States)
+Glow/Hover: #67E8F9
+Core Icons/Buttons: #22D3EE
+Gradients: #06B6D4
+Accent: Blue (Structure & Borders)
+Secondary Text: #60A5FA
+Focus Rings: #3B82F6
+Borders/Dividers (CRITICAL): #2563EB (Often used at 60% opacity)
+Button Hover Bg: #1D4ED8
+Status
+Warning: #FDE047 (Yellow)
+Error: #FCA5A5 (Red)
+
+2. Typography
+Headings: Orbitron, sans-serif
+Style: Futuristic, technical, rigid. Used for titles and data displays.
+Body: Roboto, sans-serif
+Style: Clean, readable. Used for paragraphs and nav links.
+UI/Labels: Roboto Condensed, sans-serif
+Style: Compact. Used for badges and dense UI.
+Data: monospace
+Style: Used for clocks, coordinates, and raw data.
+
+3. Web Component Specs
+Glass Panel (Cards & Containers)
+Background: #0F172A at 70% opacity.
+Border: 1px solid #2563EB at 60% opacity.
+Blur Effect: backdrop-filter: blur(4px).
+Border Radius: 12px.
+Shadow: Large, blue-tinted shadow (0 25px 50px -12px rgba(37, 99, 235, 0.1)).
+Primary Action Button ("Hollow Tech" Style)
+Background: Transparent (default).
+Border: 1px solid #1D4ED8 (Blue 700).
+Text Color: #60A5FA (Blue 400).
+Font Weight: Semi-bold (600).
+Border Radius: 6px.
+Hover State:
+Background becomes rgba(29, 78, 216, 0.2).
+Text becomes #93C5FD (lighter blue).
+Navigation Bar
+Position: Sticky at top (z-index: 50).
+Background: Black at 50% opacity.
+Blur: backdrop-filter: blur(4px).
+Bottom Border: 1px solid #2563EB at 60% opacity.
+Height: 64px.
+Form Inputs
+Background: #1E293B.
+Border: 1px solid #475569.
+Text Color: #E5E7EB.
+Placeholder Color: #64748B.
+Focus State: Blue border (#3B82F6) with matching ring.
+
